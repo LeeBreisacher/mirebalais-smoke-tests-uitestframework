@@ -1,0 +1,1 @@
+The mirebalais-smoke-tests rewritten using the openmrs-contrib-uitestframework.
