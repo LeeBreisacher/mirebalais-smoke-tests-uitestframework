@@ -1,6 +1,8 @@
 package org.openmrs.module.mirebalais.smoke;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
 
 import org.junit.After;
 import org.junit.Before;
@@ -20,7 +22,6 @@ public class ActiveVisitsTest extends TestBase {
 	private PatientDashboard patientDashboard;
 	private PatientInfo testPatient;
 
-
 	@Before
 	public void before() {
 		testPatient = createTestPatient(PATIENT_IDENTIFIER_TYPE);
@@ -35,9 +36,7 @@ public class ActiveVisitsTest extends TestBase {
 	
 	@After
 	public void after() throws Exception {
-		if (testPatient != null) {
-			deletePatientUuid(testPatient.uuid);
-		}
+		deletePatientUuid(testPatient.uuid);
 		dbUnitTearDown();
 	}
 
@@ -46,9 +45,15 @@ public class ActiveVisitsTest extends TestBase {
 		System.out.println(testPatient.givenName + " " + testPatient.familyName + " " + testPatient.identifier + " " + testPatient.uuid);
 		appDashboard.openActiveVisitsApp();
 		assertFalse(pageContent().contains(testPatient.identifier));
+		
 		appDashboard.goToPatientPage(testPatient.id);
 		assertPage(patientDashboard);
 		patientDashboard.startVisit();
+		
+		appDashboard.openActiveVisitsApp();
+		String contentText = pageContent();
+		assertThat(contentText, containsString(testPatient.getName()));
+		assertThat(contentText, containsString(testPatient.identifier));
 	}
 
 }
