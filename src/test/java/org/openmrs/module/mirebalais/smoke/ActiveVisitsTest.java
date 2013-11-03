@@ -9,7 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openmrs.module.mirebalais.smoke.pageobjects.HomePage;
 import org.openmrs.module.mirebalais.smoke.pageobjects.PatientDashboard;
-import org.openmrs.uitestframework.page.LoginPage;
 import org.openmrs.uitestframework.test.TestBase;
 import org.openmrs.uitestframework.test.TestData.PatientInfo;
 
@@ -17,7 +16,6 @@ public class ActiveVisitsTest extends TestBase {
 
 	public static final String PATIENT_IDENTIFIER_TYPE = "ZL EMR ID";
 	
-	private LoginPage loginPage;
 	private HomePage appDashboard;
 	private PatientDashboard patientDashboard;
 	private PatientInfo testPatient;
@@ -25,12 +23,10 @@ public class ActiveVisitsTest extends TestBase {
 	@Before
 	public void before() {
 		testPatient = createTestPatient(PATIENT_IDENTIFIER_TYPE);
-		loginPage = new LoginPage(driver);
         appDashboard = new HomePage(driver);
         patientDashboard = new PatientDashboard(driver);
 
-        assertPage(loginPage);
-		loginPage.loginAsAdmin();
+        login();
 		assertPage(appDashboard);
 	}
 	
