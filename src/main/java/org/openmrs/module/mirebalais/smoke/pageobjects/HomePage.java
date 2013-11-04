@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 public class HomePage extends AbstractBasePage {
 
 	public static final String ACTIVE_VISITS = "org-openmrs-module-mirebalais-activeVisitsHomepageLink-app";
+    public static final String CAPTURE_VITALS = "mirebalais-outpatientVitals-app";
 
 	public HomePage(WebDriver driver) {
 		super(driver);
@@ -24,11 +25,15 @@ public class HomePage extends AbstractBasePage {
 	private void openApp(String appIdentifier) {
 		driver.get(properties.getWebAppUrl());
 		clickOn(By.id(appIdentifier));
-//        waitForJsVariable("Navigator.isReady");
 	}
 
 	public void goToPatientPage(String patientId) {
         driver.get(properties.getWebAppUrl() + "/coreapps/patientdashboard/patientDashboard.page?patientId=" + patientId);
 	}
+
+    public void openCaptureVitalsApp() {
+        openApp(CAPTURE_VITALS);
+        waitForElement(By.id("patient-search-field-search"));
+    }
 
 }
