@@ -7,25 +7,15 @@ import static org.junit.Assert.assertThat;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openmrs.module.mirebalais.smoke.pageobjects.HomePage;
-import org.openmrs.module.mirebalais.smoke.pageobjects.PatientDashboard;
-import org.openmrs.uitestframework.test.TestBase;
 import org.openmrs.uitestframework.test.TestData.PatientInfo;
 
-public class ActiveVisitsTest extends TestBase {
+public class ActiveVisitsTest extends BasicMirebalaisSmokeTest {
 
-	public static final String PATIENT_IDENTIFIER_TYPE = "ZL EMR ID";
-	
-	private HomePage appDashboard;
-	private PatientDashboard patientDashboard;
 	private PatientInfo testPatient;
 
 	@Before
 	public void before() {
 		testPatient = createTestPatient(PATIENT_IDENTIFIER_TYPE);
-        appDashboard = new HomePage(driver);
-        patientDashboard = new PatientDashboard(driver);
-
         login();
 		assertPage(appDashboard);
 	}
