@@ -5,6 +5,10 @@ import org.openmrs.module.mirebalais.smoke.pageobjects.HomePage;
 import org.openmrs.module.mirebalais.smoke.pageobjects.PatientDashboard;
 import org.openmrs.uitestframework.test.TestBase;
 
+/**
+ * UI Smoke Test superclass, adds Mirebalais-specifics to 
+ * the UI Test Framework (TestBase).  
+ */
 public class BasicMirebalaisSmokeTest extends TestBase {
 
 	public static final String PATIENT_IDENTIFIER_TYPE = "ZL EMR ID";
