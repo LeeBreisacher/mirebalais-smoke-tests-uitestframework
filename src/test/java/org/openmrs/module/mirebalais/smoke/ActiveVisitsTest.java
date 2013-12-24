@@ -15,15 +15,14 @@ public class ActiveVisitsTest extends BasicMirebalaisSmokeTest {
 
 	@Before
 	public void before() {
-		testPatient = createTestPatient(PATIENT_IDENTIFIER_TYPE);
+		testPatient = createTestPatient();
         login();
 		assertPage(appDashboard);
 	}
 	
 	@After
 	public void after() throws Exception {
-		deletePatientUuid(testPatient.uuid);
-		dbUnitTearDown();
+		deletePatient(testPatient);
 	}
 
 	@Test

@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.openmrs.module.mirebalais.smoke.pageobjects.HomePage;
 import org.openmrs.module.mirebalais.smoke.pageobjects.PatientDashboard;
 import org.openmrs.uitestframework.test.TestBase;
+import org.openmrs.uitestframework.test.TestData.PatientInfo;
 
 /**
  * UI Smoke Test superclass, adds Mirebalais-specifics to 
@@ -22,4 +23,8 @@ public class BasicMirebalaisSmokeTest extends TestBase {
         patientDashboard = new PatientDashboard(driver);
 	}
 	
+	@Override
+	public PatientInfo createTestPatient() {
+		return createTestPatient(PATIENT_IDENTIFIER_TYPE);
+	}
 }

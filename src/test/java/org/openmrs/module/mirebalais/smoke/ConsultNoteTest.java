@@ -22,8 +22,6 @@ public class ConsultNoteTest extends BasicMirebalaisSmokeTest {
 
 	@BeforeClass
 	public static void loginAsClinicalUser() throws Exception {
-		System.out.println(TestData.getRoleUuid("Privilege Level: Full"));
-		System.out.println(TestData.getRoleUuid("Application Role: clinical"));
 		clinicalRole = findOrCreateRole("Application Role: clinical");
 		clinicalUser = createUser("smoke-test-clinical-" + TestData.randomSuffix(), clinicalRole);
         login(clinicalUser);
@@ -32,14 +30,13 @@ public class ConsultNoteTest extends BasicMirebalaisSmokeTest {
 	@AfterClass
 	public static void cleanup() throws Exception {
 		deleteUser(clinicalUser);
-		dbUnitTearDownStatic();
 		deleteRole(clinicalRole);
-		dbUnitTearDownStatic();
 	}
 	
 	@Before
 	public void setUp() throws Exception {
-		testPatient = createTestPatient(PATIENT_IDENTIFIER_TYPE);
+		testPatient = createTestPatient();
+		System.out.println("Test Patient: " + testPatient);
 		
 		appDashboard.goToPatientPage(testPatient.id);
 		patientDashboard.startVisit();
@@ -47,66 +44,80 @@ public class ConsultNoteTest extends BasicMirebalaisSmokeTest {
 
 	@After
 	public void after() throws Exception {
-		deletePatientUuid(testPatient.uuid);
-		dbUnitTearDown();
+		deletePatient(testPatient);
 	}
 	
 	@Test
 	public void testSetup() {
-		System.out.println(clinicalRole);
-		System.out.println(clinicalUser);
-		System.out.println(testPatient);
+		System.out.println("clinicalRole: " + clinicalRole);
+		System.out.println("clinicalUser: " + clinicalUser);
+		System.out.println("testPatient: " + testPatient);
 	}
 
-//	@Test
-//	public void addConsultationToAVisitWithoutCheckin() throws Exception {
-//		patientDashboard.addConsultNoteWithDischarge(PRIMARY_DIAGNOSIS);
-//		
-//		assertThat(patientDashboard.countEncountersOfType(PatientDashboard.CONSULTATION), is(1));
-//	}
-//	
-//	@Test
-//	public void addConsultationNoteWithDeathAsDispositionClosesVisit() throws Exception {
-//		patientDashboard.addConsultNoteWithDeath(PRIMARY_DIAGNOSIS);
-//		
-//		assertThat(patientDashboard.isDead(), is(true));
-//		assertThat(patientDashboard.hasActiveVisit(), is(false));
-//		assertThat(patientDashboard.startVisitButtonIsVisible(), is(false));
-//	}
-//
-//
-//    @Test
-//    public void editConsultationNote() throws Exception {
-//
-//        patientDashboard.addConsultNoteWithDischarge(PRIMARY_DIAGNOSIS);
-//        patientDashboard.editExistingConsultNote(EDITED_PRIMARY_DIAGNOSIS);
-//
-//        assertThat(patientDashboard.countEncountersOfType(PatientDashboard.CONSULTATION), is(1));
-//
-//        patientDashboard.viewConsultationDetails();
-//        assertThat(patientDashboard.containsText(EDITED_PRIMARY_DIAGNOSIS), is(true));
-//        assertThat(patientDashboard.containsText(PRIMARY_DIAGNOSIS), is(false));
-//    }
-//
-//	@Test
-//	public void addEDNote() throws Exception {
-//		patientDashboard.addEmergencyDepartmentNote(PRIMARY_DIAGNOSIS);
-//		
-//		assertThat(patientDashboard.countEncountersOfType(PatientDashboard.CONSULTATION), is(1));
-//	}
-//
-//    @Test
-//    public void editEDNote() throws Exception {
-//
-//        patientDashboard.addEmergencyDepartmentNote(PRIMARY_DIAGNOSIS);
-//        patientDashboard.editExistingEDNote(EDITED_PRIMARY_DIAGNOSIS);
-//
-//        assertThat(patientDashboard.countEncountersOfType(PatientDashboard.CONSULTATION), is(1));
-//
-//        patientDashboard.viewConsultationDetails();
-//        assertThat(patientDashboard.containsText(EDITED_PRIMARY_DIAGNOSIS), is(true));
-//        assertThat(patientDashboard.containsText(PRIMARY_DIAGNOSIS), is(false));
-//    }
+/*
+	@BeforeClass
+	public static void prepare() throws Exception {
+        logInAsClinicalUser();
+    }
+	
+	@Before
+	public void setUp() throws Exception {
+		Patient testPatient = PatientDatabaseHandler.insertNewTestPatient();
+		initBasicPageObjects();
+		
+		appDashboard.goToPatientPage(testPatient.getId());
+		patientDashboard.startVisit();
+	}
+	
+	@Test
+	public void addConsultationToAVisitWithoutCheckin() throws Exception {
+		patientDashboard.addConsultNoteWithDischarge(PRIMARY_DIAGNOSIS);
+		
+		assertThat(patientDashboard.countEncountersOfType(PatientDashboard.CONSULTATION), is(1));
+	}
+	
+	@Test
+	public void addConsultationNoteWithDeathAsDispositionClosesVisit() throws Exception {
+		patientDashboard.addConsultNoteWithDeath(PRIMARY_DIAGNOSIS);
+		
+		assertThat(patientDashboard.isDead(), is(true));
+		assertThat(patientDashboard.hasActiveVisit(), is(false));
+		assertThat(patientDashboard.startVisitButtonIsVisible(), is(false));
+	}
 
+
+    @Test
+    public void editConsultationNote() throws Exception {
+
+        patientDashboard.addConsultNoteWithDischarge(PRIMARY_DIAGNOSIS);
+        patientDashboard.editExistingConsultNote(EDITED_PRIMARY_DIAGNOSIS);
+
+        assertThat(patientDashboard.countEncountersOfType(PatientDashboard.CONSULTATION), is(1));
+
+        patientDashboard.viewConsultationDetails();
+        assertThat(patientDashboard.containsText(EDITED_PRIMARY_DIAGNOSIS), is(true));
+        assertThat(patientDashboard.containsText(PRIMARY_DIAGNOSIS), is(false));
+    }
+
+	@Test
+	public void addEDNote() throws Exception {
+		patientDashboard.addEmergencyDepartmentNote(PRIMARY_DIAGNOSIS);
+		
+		assertThat(patientDashboard.countEncountersOfType(PatientDashboard.CONSULTATION), is(1));
+	}
+
+    @Test
+    public void editEDNote() throws Exception {
+
+        patientDashboard.addEmergencyDepartmentNote(PRIMARY_DIAGNOSIS);
+        patientDashboard.editExistingEDNote(EDITED_PRIMARY_DIAGNOSIS);
+
+        assertThat(patientDashboard.countEncountersOfType(PatientDashboard.CONSULTATION), is(1));
+
+        patientDashboard.viewConsultationDetails();
+        assertThat(patientDashboard.containsText(EDITED_PRIMARY_DIAGNOSIS), is(true));
+        assertThat(patientDashboard.containsText(PRIMARY_DIAGNOSIS), is(false));
+    }
+ * */
 
 }
