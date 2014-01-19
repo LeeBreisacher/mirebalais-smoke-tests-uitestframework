@@ -25,6 +25,8 @@ public class BasicMirebalaisSmokeTest extends TestBase {
 	
 	@Override
 	public PatientInfo createTestPatient() {
-		return createTestPatient(PATIENT_IDENTIFIER_TYPE);
+		PatientInfo testPatient = createTestPatient(PATIENT_IDENTIFIER_TYPE);
+		createTestEncounter("Patient Registration", testPatient);
+		return testPatient;
 	}
 }

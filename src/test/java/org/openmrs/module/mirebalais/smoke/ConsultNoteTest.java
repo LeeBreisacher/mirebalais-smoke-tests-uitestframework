@@ -1,10 +1,14 @@
 package org.openmrs.module.mirebalais.smoke;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openmrs.module.mirebalais.smoke.pageobjects.PatientDashboard;
 import org.openmrs.uitestframework.test.TestData;
 import org.openmrs.uitestframework.test.TestData.PatientInfo;
 import org.openmrs.uitestframework.test.TestData.RoleInfo;
@@ -13,7 +17,6 @@ import org.openmrs.uitestframework.test.TestData.UserInfo;
 public class ConsultNoteTest extends BasicMirebalaisSmokeTest {
 
     private static final String PRIMARY_DIAGNOSIS = "IGU";
-    private static final String EDITED_PRIMARY_DIAGNOSIS = "Asthme";
 
     private static UserInfo clinicalUser;
 	private static RoleInfo clinicalRole;
@@ -36,7 +39,9 @@ public class ConsultNoteTest extends BasicMirebalaisSmokeTest {
 	@Before
 	public void setUp() throws Exception {
 		testPatient = createTestPatient();
-		System.out.println("Test Patient: " + testPatient);
+		System.out.println("clinicalRole: " + clinicalRole);
+		System.out.println("clinicalUser: " + clinicalUser);
+		System.out.println("testPatient: " + testPatient);
 		
 		appDashboard.goToPatientPage(testPatient.id);
 		patientDashboard.startVisit();
@@ -48,34 +53,13 @@ public class ConsultNoteTest extends BasicMirebalaisSmokeTest {
 	}
 	
 	@Test
-	public void testSetup() {
-		System.out.println("clinicalRole: " + clinicalRole);
-		System.out.println("clinicalUser: " + clinicalUser);
-		System.out.println("testPatient: " + testPatient);
-	}
-
-/*
-	@BeforeClass
-	public static void prepare() throws Exception {
-        logInAsClinicalUser();
-    }
-	
-	@Before
-	public void setUp() throws Exception {
-		Patient testPatient = PatientDatabaseHandler.insertNewTestPatient();
-		initBasicPageObjects();
-		
-		appDashboard.goToPatientPage(testPatient.getId());
-		patientDashboard.startVisit();
-	}
-	
-	@Test
 	public void addConsultationToAVisitWithoutCheckin() throws Exception {
 		patientDashboard.addConsultNoteWithDischarge(PRIMARY_DIAGNOSIS);
 		
 		assertThat(patientDashboard.countEncountersOfType(PatientDashboard.CONSULTATION), is(1));
 	}
 	
+/*
 	@Test
 	public void addConsultationNoteWithDeathAsDispositionClosesVisit() throws Exception {
 		patientDashboard.addConsultNoteWithDeath(PRIMARY_DIAGNOSIS);
