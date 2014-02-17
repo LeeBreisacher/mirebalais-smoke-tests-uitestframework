@@ -26,7 +26,7 @@ public class ConsultNoteTest extends BasicMirebalaisSmokeTest {
 	@BeforeClass
 	public static void loginAsClinicalUser() throws Exception {
 		clinicalRole = findOrCreateRole("Application Role: clinical");
-		clinicalUser = createUser("smoke-test-clinical-" + TestData.randomSuffix(), clinicalRole);
+		clinicalUser = createUser("smoke-test-clinical-" + TestData.randomSuffix(), clinicalRole, "Clinical Doctor", "ht");
         login(clinicalUser);
     }
 
