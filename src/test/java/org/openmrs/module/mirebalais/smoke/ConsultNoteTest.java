@@ -17,6 +17,7 @@ import org.openmrs.uitestframework.test.TestData.UserInfo;
 public class ConsultNoteTest extends BasicMirebalaisSmokeTest {
 
     private static final String PRIMARY_DIAGNOSIS = "IGU";
+    private static final String EDITED_PRIMARY_DIAGNOSIS = "Asthme";
 
     private static UserInfo clinicalUser;
 	private static RoleInfo clinicalRole;
@@ -59,7 +60,7 @@ public class ConsultNoteTest extends BasicMirebalaisSmokeTest {
 		assertThat(patientDashboard.countEncountersOfType(PatientDashboard.CONSULTATION), is(1));
 	}
 	
-/*
+	
 	@Test
 	public void addConsultationNoteWithDeathAsDispositionClosesVisit() throws Exception {
 		patientDashboard.addConsultNoteWithDeath(PRIMARY_DIAGNOSIS);
@@ -72,7 +73,6 @@ public class ConsultNoteTest extends BasicMirebalaisSmokeTest {
 
     @Test
     public void editConsultationNote() throws Exception {
-
         patientDashboard.addConsultNoteWithDischarge(PRIMARY_DIAGNOSIS);
         patientDashboard.editExistingConsultNote(EDITED_PRIMARY_DIAGNOSIS);
 
@@ -90,6 +90,7 @@ public class ConsultNoteTest extends BasicMirebalaisSmokeTest {
 		assertThat(patientDashboard.countEncountersOfType(PatientDashboard.CONSULTATION), is(1));
 	}
 
+	/*
     @Test
     public void editEDNote() throws Exception {
 
@@ -102,6 +103,7 @@ public class ConsultNoteTest extends BasicMirebalaisSmokeTest {
         assertThat(patientDashboard.containsText(EDITED_PRIMARY_DIAGNOSIS), is(true));
         assertThat(patientDashboard.containsText(PRIMARY_DIAGNOSIS), is(false));
     }
+
  * */
 
 }

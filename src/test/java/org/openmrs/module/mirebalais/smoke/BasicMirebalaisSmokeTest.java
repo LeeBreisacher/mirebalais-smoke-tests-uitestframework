@@ -13,6 +13,7 @@ import org.openmrs.uitestframework.test.TestData.PatientInfo;
 public class BasicMirebalaisSmokeTest extends TestBase {
 
 	public static final String PATIENT_IDENTIFIER_TYPE = "ZL EMR ID";
+	public static final String PATIENT_IDENTIFIER_SOURCE = "5";
 	
 	protected HomePage appDashboard;
 	protected PatientDashboard patientDashboard;
@@ -25,7 +26,7 @@ public class BasicMirebalaisSmokeTest extends TestBase {
 	
 	@Override
 	public PatientInfo createTestPatient() {
-		PatientInfo testPatient = createTestPatient(PATIENT_IDENTIFIER_TYPE);
+		PatientInfo testPatient = createTestPatient(PATIENT_IDENTIFIER_TYPE, PATIENT_IDENTIFIER_SOURCE);
 		createTestEncounter("Patient Registration", testPatient);
 		return testPatient;
 	}
