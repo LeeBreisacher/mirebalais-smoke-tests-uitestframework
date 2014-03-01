@@ -91,6 +91,11 @@ public class PatientDashboard extends AbstractBasePage {
 		consultNoteForm.fillFormWithDeath(primaryDiagnosis);
 	}
 
+	public void editExistingEDNote(String primaryDiagnosis) throws Exception {
+		openForm(By.cssSelector(".consult-encounter-template .editEncounter"));
+		eDNoteForm.editPrimaryDiagnosis(primaryDiagnosis);
+	}
+	
 	private void createFormsMap() {
 		formList = new HashMap<String, By>();
 		formList.put("Consult Note", By.id("mirebalais.consult"));

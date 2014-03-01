@@ -90,7 +90,6 @@ public class ConsultNoteTest extends BasicMirebalaisSmokeTest {
 		assertThat(patientDashboard.countEncountersOfType(PatientDashboard.CONSULTATION), is(1));
 	}
 
-	/*
     @Test
     public void editEDNote() throws Exception {
 
@@ -103,7 +102,5 @@ public class ConsultNoteTest extends BasicMirebalaisSmokeTest {
         assertThat(patientDashboard.containsText(EDITED_PRIMARY_DIAGNOSIS), is(true));
         assertThat(patientDashboard.containsText(PRIMARY_DIAGNOSIS), is(false));
     }
-
- * */
 
 }
