@@ -40,9 +40,9 @@ public class ConsultNoteTest extends BasicMirebalaisSmokeTest {
 	@Before
 	public void setUp() throws Exception {
 		testPatient = createTestPatient();
-		System.out.println("clinicalRole: " + clinicalRole);
-		System.out.println("clinicalUser: " + clinicalUser);
-		System.out.println("testPatient: " + testPatient);
+//		System.out.println("clinicalRole: " + clinicalRole);
+//		System.out.println("clinicalUser: " + clinicalUser);
+//		System.out.println("testPatient: " + testPatient);
 		
 		appDashboard.goToPatientPage(testPatient.id);
 		patientDashboard.startVisit();
